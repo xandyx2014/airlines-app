@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Passenger } from '../../Services/Passenger/passengerModel'
+import { Button } from '../../Shared/Button'
 
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
@@ -46,7 +47,17 @@ const Aeirlines = () => {
   return (
     <>
       <Navbar />
-
+      <div className={style['button-create']}>
+        <Button
+          onClick={() => {
+            setState(Status.create)
+            setModalEdit(true)
+          }}
+        >
+          Create Passenger 📚
+        </Button>
+      </div>
+      <br />
       <div className={style.cards}>
         {passengers.map((passenger) => {
           return (
