@@ -1,12 +1,15 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Aeirlines from './Pages/Aeirlines'
+const Aeirlines = lazy(() => import('./Pages/Aeirlines'))
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Aeirlines />} />
-    </Routes>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Aeirlines />} />
+      </Routes>
+    </Suspense>
   )
 }
 

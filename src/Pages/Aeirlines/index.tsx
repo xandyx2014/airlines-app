@@ -1,16 +1,20 @@
 import Card from '../../Shared/Card'
+import { Navbar } from '../../Shared/Navbar'
 import style from './aeirlines.module.css'
 
 const Aeirlines = () => {
   return (
-    <div className={style.cards}>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-      <Card></Card>
-    </div>
+    <>
+      <Navbar />
+      <div className={style.cards}>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+      </div>
+    </>
   )
 }
 export default Aeirlines

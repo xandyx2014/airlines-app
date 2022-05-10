@@ -59,21 +59,11 @@
   }
 }
 @media only screen and (max-width: 920px) {
-  /* {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    grid-template-columns: 1fr;
-  } */
   .card {
     max-width: 400px;
   }
 }
 @media only screen and (max-width: 500px) {
-  /* {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    grid-template-columns: 1fr;
-  } */
   .card {
     max-width: 320px;
   }
