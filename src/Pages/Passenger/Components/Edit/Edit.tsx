@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
 import Modal from 'react-modal'
 import { useForm, SubmitHandler } from 'react-hook-form'
-
-import { UpdateServices } from '../../../../Services/Passenger/UpdateServices'
-import { CreateServices } from '../../../../Services/Passenger/SaveServices'
 import { toast } from 'react-toastify'
 import { Passenger } from '../../../../Services/Passenger/passengerModel'
+import { Context, CreateStrategy, UpdateStrategy } from './Strategy'
 
 interface FormInput {
   name: string
@@ -33,48 +31,6 @@ interface EditModalProps {
   onRequest: () => void
   status: Status
 }
-interface Strategy {
-  request(id: string, data: any): Promise<any>
-}
-class UpdateStrategy implements Strategy {
-  public async request(id: string, data: any) {
-    return await UpdateServices({
-      id: id ?? '',
-      passenger: {
-        name: data.name,
-        airlines: data.airline,
-        trips: data.trips,
-      },
-    })
-  }
-}
-class CreateStrategy implements Strategy {
-  public async request(id: string, data: any) {
-    return await CreateServices({
-      id,
-      passenger: {
-        name: data.name,
-        airlines: data.airline,
-        trips: data.trips,
-      },
-    })
-  }
-}
-class Context {
-  private strategy: Strategy
-
-  constructor(strategy: Strategy) {
-    this.strategy = strategy
-  }
-
-  public setStrategy(strategy: Strategy) {
-    this.strategy = strategy
-  }
-
-  public requestHandle(id: any, data: any): void {
-    this.strategy.request(id, data)
-  }
-}
 
 export default function EditModal({
   passenger,
@@ -87,18 +43,19 @@ export default function EditModal({
     // references are now sync'd and can be accessed.
     console.log('after')
   }
+  const contextStrategy = new Context(new CreateStrategy())
   const { register, handleSubmit } = useForm<FormInput>()
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
-      await UpdateServices({
-        id: passenger?._id ?? '',
-        passenger: {
-          name: data.name,
-          airlines: data.airline,
-          trips: data.trips,
-        },
+      const strategy =
+        status === Status.create ? new CreateStrategy() : new UpdateStrategy()
+      contextStrategy.setStrategy(strategy)
+      await contextStrategy.requestHandle(passenger?._id ?? '', {
+        name: data.name,
+        airline: data.airline,
+        trips: data.trips,
       })
-      toast.success(`Update successfully`)
+      toast.success(`${status} successfully`)
       closeModal()
       onRequest()
     } catch (error) {
@@ -116,7 +73,6 @@ export default function EditModal({
         ariaHideApp={false}
         contentLabel="Example Modal"
       >
-        {status}
         <span onClick={closeModal}>❌</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="label" htmlFor="name">
@@ -125,7 +81,7 @@ export default function EditModal({
           <input
             id="name"
             className="input"
-            value={passenger?.name ?? ''}
+            defaultValue={passenger?.name ?? ''}
             {...register('name', {})}
           />
           <label className="label" htmlFor="trips">
@@ -134,7 +90,7 @@ export default function EditModal({
           <input
             id="trips"
             className="input"
-            value={passenger?.trips ?? ''}
+            defaultValue={passenger?.trips ?? ''}
             {...register('trips', {})}
           />
           <label className="label" htmlFor="airline">
@@ -142,12 +98,12 @@ export default function EditModal({
           </label>
           <input
             id="airline"
-            value={passenger?.airline.length ?? ''}
+            defaultValue={passenger?.airline.length ?? ''}
             className="input"
             {...register('airline', {})}
           />
 
-          <button>Submit</button>
+          <button>{status}</button>
         </form>
       </Modal>
     </div>
