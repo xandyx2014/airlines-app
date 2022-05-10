@@ -8,6 +8,7 @@ input, select, textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
 }
 
 .label, .checkbox-label, .radio-label {
@@ -21,6 +22,7 @@ input, select, textarea {
   border-style: solid;
   border-color: lightgray;
   background-color: white;
+  margin-bottom: 0.25rem;
 }
 .input:focus, .textarea:focus, .select:focus, .checkbox-label:focus:before, .radio-label:focus:before, .checkbox-label:focus:after, .radio-label:focus:after {
   border-color: gray;

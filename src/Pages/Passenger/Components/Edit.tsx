@@ -1,5 +1,6 @@
 import Modal from 'react-modal'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Button } from '../../../Shared/Button'
 
 interface FormInput {
   name: string
@@ -80,7 +81,7 @@ export default function EditModal({ modalIsOpen, closeModal }: EditModalProps) {
             })}
           />
 
-          <button type="submit">Submit</button>
+          <Button type="submit">Submit</Button>
         </form>
       </Modal>
     </div>
