@@ -1,6 +1,7 @@
 import { Navbar } from '../../Shared/Navbar'
 import style from './passenger.module.css'
 import usePassenger from './hook/usePassenger'
+import { Avatar } from '../../Shared/Avatar'
 
 const Aeirlines = () => {
   const [passengers] = usePassenger()
@@ -9,7 +10,13 @@ const Aeirlines = () => {
       <Navbar />
       <div className={style.cards}>
         {passengers.map((passenger) => {
-          return <div key={passenger._id}>{passenger.name}</div>
+          return (
+            <Avatar
+              key={passenger._id}
+              name={passenger.name}
+              trips={passenger.trips}
+            />
+          )
         })}
       </div>
     </>
