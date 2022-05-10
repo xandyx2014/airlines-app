@@ -3,11 +3,16 @@ import style from './passenger.module.css'
 import usePassenger from './hook/usePassenger'
 import { Avatar } from '../../Shared/Avatar'
 import ViewModal from './Components/View'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { AirlineModel } from '../../Services/Airlines/airlinesModel'
 
 const Aeirlines = () => {
   const [passengers] = usePassenger()
   const [modal, setModal] = useState(false)
+  const currentPassenger = useRef<AirlineModel[]>([])
+  const closeModal = () => {
+    setModal(false)
+  }
   return (
     <>
       <Navbar />
@@ -16,13 +21,19 @@ const Aeirlines = () => {
           return (
             <Avatar
               key={passenger._id}
-              name={passenger.name}
-              trips={passenger.trips}
-              onClick={() => setModal(true)}
+              passenger={passenger}
+              onClick={(passenger) => {
+                currentPassenger.current = passenger
+                setModal(true)
+              }}
             />
           )
         })}
-        <ViewModal modalIsOpen={modal} />
+        <ViewModal
+          modalIsOpen={modal}
+          airlines={currentPassenger.current}
+          closeModal={closeModal}
+        />
       </div>
     </>
   )

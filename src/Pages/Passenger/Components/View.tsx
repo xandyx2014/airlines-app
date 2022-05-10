@@ -1,4 +1,5 @@
 import Modal from 'react-modal'
+import { AirlineModel } from '../../../Services/Airlines/airlinesModel'
 
 const customStyles = {
   content: {
@@ -12,20 +13,21 @@ const customStyles = {
 }
 interface ViewModalProps {
   modalIsOpen: boolean
+  closeModal?: () => void
+  airlines: AirlineModel[]
 }
-export default function ViewModal({ modalIsOpen }: ViewModalProps) {
-  const openModal = () => {}
-
+export default function ViewModal({
+  modalIsOpen,
+  closeModal,
+  airlines,
+}: ViewModalProps) {
   const afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     console.log('after')
   }
 
-  const closeModal = () => {}
-
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -34,12 +36,16 @@ export default function ViewModal({ modalIsOpen }: ViewModalProps) {
         ariaHideApp={false}
         contentLabel="Example Modal"
       >
-        <button onClick={closeModal}>close</button>
-        <ul>
-          <li>Coffee: 12312312</li>
-          <li>Tea: 12312312</li>
-          <li>Milk: 12312312</li>
-        </ul>
+        <span onClick={closeModal}>❌</span>
+        {airlines.map((airline) => (
+          <ul key={airline.id}>
+            <li>Name: {airline.name}</li>
+            <li>Country: {airline.country}</li>
+            <li>Established: {airline.established}</li>
+            <li>Slogan: {airline.slogan}</li>
+            <li>Website: {airline.website}</li>
+          </ul>
+        ))}
       </Modal>
     </div>
   )
