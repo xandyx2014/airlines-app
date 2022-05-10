@@ -4,9 +4,15 @@ import style from './avatar.module.css'
 interface AvatarProps {
   passenger: Passenger
   onClick: (airline: AirlineModel[]) => void
-  onDelete: (airline: Passenger) => void
+  onDelete: (passenger: Passenger) => void
+  onUpdate: (passenger: Passenger) => void
 }
-export const Avatar = ({ passenger, onClick, onDelete }: AvatarProps) => {
+export const Avatar = ({
+  passenger,
+  onClick,
+  onDelete,
+  onUpdate,
+}: AvatarProps) => {
   return (
     <div className={style['user-card']}>
       <span className={style['user-info-holder']}>
@@ -31,8 +37,14 @@ export const Avatar = ({ passenger, onClick, onDelete }: AvatarProps) => {
           >
             Show More
           </button>
-        </span>
-        <span className={style.button}>
+          <button
+            className={style['show-more-btn']}
+            onClick={() => {
+              onUpdate(passenger)
+            }}
+          >
+            Edit 📚
+          </button>
           <button
             className={style['show-more-btn']}
             onClick={() => {
