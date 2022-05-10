@@ -23,7 +23,6 @@ export default function ViewModal({
   airlines,
 }: ViewModalProps) {
   const afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
     console.log('after')
   }
 

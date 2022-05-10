@@ -1,13 +1,15 @@
 import Card from '../../Shared/Card'
+import { Loading } from '../../Shared/Loading/Loading'
 import { Navbar } from '../../Shared/Navbar'
 import style from './aeirlines.module.css'
 import useAirlines from './hook/useAirlines'
 
 const Aeirlines = () => {
-  const [airlines] = useAirlines()
+  const [airlines, isLoading] = useAirlines()
   return (
     <>
       <Navbar />
+      {isLoading && <Loading />}
       <div className={style.cards}>
         {airlines.map((airline, index) => {
           return (
