@@ -71,3 +71,7 @@ src
 - `Pages` folder contains all the pages of the application.
 - `Services` folder contains all the services of the application.
 - `Shared` folder contains all the shared components of the application.
+
+## TODO
+- [] Refactor Page/Passenger 
+- [] Add Responsive design to in Cards and Avatar
