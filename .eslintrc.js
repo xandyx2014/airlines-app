@@ -13,5 +13,13 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
-  rules: {},
+  rules: {
+    'react/react/in-jsx-scope': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endPfLine: 'auto',
+      },
+    ],
+  },
 }

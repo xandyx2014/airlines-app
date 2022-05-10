@@ -1,0 +1,24 @@
+.cards {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 0.5rem;
+  row-gap: 4rem;
+  grid-auto-flow: dense;
+  align-items: start;
+}
+@media only screen and (max-width: 920px) {
+  .cards {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+  } 
+
+}
+@media only screen and (max-width: 500px) {
+  .cards{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+  }
+}
