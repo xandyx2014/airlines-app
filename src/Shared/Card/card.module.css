@@ -21,6 +21,9 @@
   transition: color 0.3s;
   color: royalblue;
 }
+.card-header a {
+  text-decoration: none;
+}
  .card:hover .card-header h3 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
