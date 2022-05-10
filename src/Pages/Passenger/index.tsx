@@ -3,7 +3,7 @@ import style from './passenger.module.css'
 import usePassenger from './hook/usePassenger'
 import { Avatar } from '../../Shared/Avatar'
 import ViewModal from './Components/View'
-import EditModal from './Components/Edit'
+import EditModal, { Status } from './Components/Edit/Edit'
 import { useRef, useState } from 'react'
 import { AirlineModel } from '../../Services/Airlines/airlinesModel'
 import { toast } from 'react-toastify'
@@ -16,7 +16,7 @@ const Aeirlines = () => {
   const [passengers, getAllAirlines, deletePassengerById] = usePassenger()
   const [modalView, setModalView] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
-
+  const [state, setState] = useState<Status>(Status.create)
   const currentAirlines = useRef<AirlineModel[]>([])
   const currentPassenger = useRef<Passenger>()
   const closeModal = () => {
@@ -62,6 +62,7 @@ const Aeirlines = () => {
               }}
               onUpdate={(passenger) => {
                 currentPassenger.current = passenger
+                setState(Status.update)
                 setModalEdit(true)
               }}
             />
@@ -73,9 +74,13 @@ const Aeirlines = () => {
           closeModal={closeModal}
         />
         <EditModal
-          id={currentPassenger.current?._id}
+          passenger={currentPassenger.current}
+          status={state}
           modalIsOpen={modalEdit}
           closeModal={closeModal}
+          onRequest={() => {
+            getAllAirlines()
+          }}
         />
       </div>
     </>

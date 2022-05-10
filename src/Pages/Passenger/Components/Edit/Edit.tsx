@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import Modal from 'react-modal'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { Button } from '../../../Shared/Button'
-import { UpdateServices } from '../../../Services/Passenger/UpdateServices'
+
+import { UpdateServices } from '../../../../Services/Passenger/UpdateServices'
+import { CreateServices } from '../../../../Services/Passenger/SaveServices'
 import { toast } from 'react-toastify'
+import { Passenger } from '../../../../Services/Passenger/passengerModel'
 
 interface FormInput {
   name: string
@@ -19,16 +22,66 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 }
+export enum Status {
+  create = 'create',
+  update = 'update',
+}
 interface EditModalProps {
-  id?: string
+  passenger?: Passenger
   modalIsOpen: boolean
   closeModal: () => void
+  onRequest: () => void
+  status: Status
+}
+interface Strategy {
+  request(id: string, data: any): Promise<any>
+}
+class UpdateStrategy implements Strategy {
+  public async request(id: string, data: any) {
+    return await UpdateServices({
+      id: id ?? '',
+      passenger: {
+        name: data.name,
+        airlines: data.airline,
+        trips: data.trips,
+      },
+    })
+  }
+}
+class CreateStrategy implements Strategy {
+  public async request(id: string, data: any) {
+    return await CreateServices({
+      id,
+      passenger: {
+        name: data.name,
+        airlines: data.airline,
+        trips: data.trips,
+      },
+    })
+  }
+}
+class Context {
+  private strategy: Strategy
+
+  constructor(strategy: Strategy) {
+    this.strategy = strategy
+  }
+
+  public setStrategy(strategy: Strategy) {
+    this.strategy = strategy
+  }
+
+  public requestHandle(id: any, data: any): void {
+    this.strategy.request(id, data)
+  }
 }
 
 export default function EditModal({
-  id,
+  passenger,
   modalIsOpen,
   closeModal,
+  onRequest,
+  status,
 }: EditModalProps) {
   const afterOpenModal = () => {
     // references are now sync'd and can be accessed.
@@ -38,7 +91,7 @@ export default function EditModal({
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
       await UpdateServices({
-        id: id ?? '',
+        id: passenger?._id ?? '',
         passenger: {
           name: data.name,
           airlines: data.airline,
@@ -47,6 +100,7 @@ export default function EditModal({
       })
       toast.success(`Update successfully`)
       closeModal()
+      onRequest()
     } catch (error) {
       toast.error(`Update passenger failed...`)
     }
@@ -62,6 +116,7 @@ export default function EditModal({
         ariaHideApp={false}
         contentLabel="Example Modal"
       >
+        {status}
         <span onClick={closeModal}>❌</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label className="label" htmlFor="name">
@@ -70,11 +125,8 @@ export default function EditModal({
           <input
             id="name"
             className="input"
-            {...register('name', {
-              required: true,
-              maxLength: 15,
-              pattern: /^[A-Za-z]+$/i,
-            })}
+            value={passenger?.name ?? ''}
+            {...register('name', {})}
           />
           <label className="label" htmlFor="trips">
             trips
@@ -82,28 +134,20 @@ export default function EditModal({
           <input
             id="trips"
             className="input"
-            {...register('trips', {
-              required: true,
-              maxLength: 15,
-              min: 18,
-              max: 99,
-            })}
+            value={passenger?.trips ?? ''}
+            {...register('trips', {})}
           />
           <label className="label" htmlFor="airline">
             airline
           </label>
           <input
             id="airline"
+            value={passenger?.airline.length ?? ''}
             className="input"
-            {...register('airline', {
-              required: true,
-              maxLength: 3,
-              min: 0,
-              max: 999,
-            })}
+            {...register('airline', {})}
           />
 
-          <Button type="submit">Submit</Button>
+          <button>Submit</button>
         </form>
       </Modal>
     </div>
