@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import 'rc-pagination/assets/index.css'
 import 'normalize.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)

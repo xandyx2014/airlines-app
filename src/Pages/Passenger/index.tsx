@@ -12,7 +12,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { Passenger } from '../../Services/Passenger/passengerModel'
 import { Button } from '../../Shared/Button'
 import { Loading } from '../../Shared/Loading/Loading'
-
+import Pagination from 'rc-pagination'
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
   const [passengers, getAllAirlines, deletePassengerById, isLoading] =
@@ -39,7 +39,7 @@ const Aeirlines = () => {
       })
       if (isConfirmed) {
         await deletePassengerById(id)
-        await getAllAirlines()
+        await getAllAirlines({ page: 0, size: 10 })
         toast.success(`Passenger ${id} deleted successfully`)
       }
     } catch (error) {
@@ -50,19 +50,31 @@ const Aeirlines = () => {
     <>
       <Navbar />
       {isLoading && <Loading />}
-      <div className={style['button-create']}>
-        <Button
-          onClick={() => {
-            setState(Status.create)
-            setModalEdit(true)
-          }}
-        >
-          Create Passenger 📚
-        </Button>
-      </div>
+      {isLoading || (
+        <>
+          <div className={style['button-create']}>
+            <Button
+              onClick={() => {
+                setState(Status.create)
+                setModalEdit(true)
+              }}
+            >
+              Create Passenger 📚
+            </Button>
+          </div>
+          <Pagination
+            className="ant-pagination"
+            defaultCurrent={1}
+            onChange={(page) => {
+              console.log(page)
+            }}
+            total={passengers?.totalPages ?? 0}
+          />
+        </>
+      )}
       <br />
       <div className={style.cards}>
-        {passengers.map((passenger) => {
+        {passengers?.data.map((passenger) => {
           return (
             <Avatar
               key={passenger._id}
@@ -93,10 +105,11 @@ const Aeirlines = () => {
           modalIsOpen={modalEdit}
           closeModal={closeModal}
           onRequest={() => {
-            getAllAirlines()
+            getAllAirlines({ page: 0, size: 10 })
           }}
         />
       </div>
+      <div></div>
     </>
   )
 }
