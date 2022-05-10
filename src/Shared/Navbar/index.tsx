@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import style from './navbar.module.css'
 
 export const Navbar = () => {
@@ -6,11 +7,17 @@ export const Navbar = () => {
       <div className={style.logo}>Encora Company </div>
       <div className={style.menu}>
         <a href="#" className={style.link}>
-          <div className={style.title}>About</div>
+          <Link to="" className={style.title}>
+            airlines
+          </Link>
+
           <div className={style.bar}></div>
         </a>
         <a href="#" className={style.link}>
-          <div className={style.title}>Work</div>
+          <Link to="/passenger" className={style.title}>
+            Passenger
+          </Link>
+
           <div className={style.bar}></div>
         </a>
       </div>
