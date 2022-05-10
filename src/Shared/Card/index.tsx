@@ -5,11 +5,19 @@ interface CardProps {
   img: string
   website: string
   foundation: string
+  isOdd?: boolean
 }
-const Card = ({ name, country, foundation, img, website }: CardProps) => (
+const Card = ({
+  name,
+  country,
+  foundation,
+  img,
+  website,
+  isOdd = false,
+}: CardProps) => (
   <>
     <div className={style.cards}>
-      <div className={style.card}>
+      <div className={`${style.card} ${isOdd && style['card-odd']}`}>
         <div className={style['card-header']}>
           <h3>{name}</h3>
         </div>

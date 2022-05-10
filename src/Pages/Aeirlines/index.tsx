@@ -9,7 +9,7 @@ const Aeirlines = () => {
     <>
       <Navbar />
       <div className={style.cards}>
-        {airlines.map((airline) => {
+        {airlines.map((airline, index) => {
           return (
             <Card
               key={airline.id}
@@ -18,6 +18,7 @@ const Aeirlines = () => {
               foundation={airline.established}
               name={airline.name}
               website={airline.website}
+              isOdd={index % 2 === 0}
             />
           )
         })}

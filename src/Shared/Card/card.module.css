@@ -8,12 +8,15 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
+.card-odd {
+  background-color: lightgray;
+}
 .card p {
   line-height: 1.5;
 }
  .card:hover {
   cursor: pointer;
-  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 2px 16px gray;
   transition: box-shadow 0.3s, transform 0.3s;
   transform: scale(1.05);
 }
@@ -52,6 +55,7 @@
 }
 .card .card-footer .avatar {
   max-width: 3rem;
+  background-color: rosybrown;
 }
 
 .muted {

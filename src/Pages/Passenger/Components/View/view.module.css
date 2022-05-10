@@ -1,0 +1,9 @@
+.list {
+  background-color: moccasin;
+  padding: 1rem 2rem;
+  border-radius: 5%;
+}
+.list li {
+  font-weight: 300;
+  line-height: 1.5rem;
+}

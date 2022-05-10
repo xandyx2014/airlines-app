@@ -1,5 +1,6 @@
 import Modal from 'react-modal'
-import { AirlineModel } from '../../../Services/Airlines/airlinesModel'
+import { AirlineModel } from '../../../../Services/Airlines/airlinesModel'
+import style from './view.module.css'
 
 const customStyles = {
   content: {
@@ -38,7 +39,7 @@ export default function ViewModal({
       >
         <span onClick={closeModal}>❌</span>
         {airlines.map((airline) => (
-          <ul key={airline.id}>
+          <ul key={airline.id} className={style.list}>
             <li>Name: {airline.name}</li>
             <li>Country: {airline.country}</li>
             <li>Established: {airline.established}</li>
