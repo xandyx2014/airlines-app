@@ -19,6 +19,10 @@ const Aeirlines = () => {
     usePassenger()
   const [modalView, setModalView] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
+  const [pagination, setPagination] = useState({
+    page: 1,
+    size: 10,
+  })
   const [state, setState] = useState<Status>(Status.create)
   const currentAirlines = useRef<AirlineModel[]>([])
   const currentPassenger = useRef<Passenger>()
@@ -39,7 +43,7 @@ const Aeirlines = () => {
       })
       if (isConfirmed) {
         await deletePassengerById(id)
-        await getAllAirlines({ page: 0, size: 10 })
+        await getAllAirlines(pagination)
         toast.success(`Passenger ${id} deleted successfully`)
       }
     } catch (error) {
@@ -64,9 +68,13 @@ const Aeirlines = () => {
           </div>
           <Pagination
             className="ant-pagination"
-            defaultCurrent={1}
-            onChange={(page) => {
-              console.log(page)
+            defaultCurrent={pagination.page}
+            onChange={async (page) => {
+              setPagination({
+                page,
+                size: 10,
+              })
+              await getAllAirlines(pagination)
             }}
             total={passengers?.totalPages ?? 0}
           />
@@ -105,7 +113,7 @@ const Aeirlines = () => {
           modalIsOpen={modalEdit}
           closeModal={closeModal}
           onRequest={() => {
-            getAllAirlines({ page: 0, size: 10 })
+            getAllAirlines(pagination)
           }}
         />
       </div>
