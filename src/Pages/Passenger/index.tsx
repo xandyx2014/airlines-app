@@ -11,10 +11,12 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Passenger } from '../../Services/Passenger/passengerModel'
 import { Button } from '../../Shared/Button'
+import { Loading } from '../../Shared/Loading/Loading'
 
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
-  const [passengers, getAllAirlines, deletePassengerById] = usePassenger()
+  const [passengers, getAllAirlines, deletePassengerById, isLoading] =
+    usePassenger()
   const [modalView, setModalView] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
   const [state, setState] = useState<Status>(Status.create)
@@ -47,6 +49,7 @@ const Aeirlines = () => {
   return (
     <>
       <Navbar />
+      {isLoading && <Loading />}
       <div className={style['button-create']}>
         <Button
           onClick={() => {
