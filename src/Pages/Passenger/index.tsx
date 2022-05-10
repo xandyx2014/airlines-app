@@ -5,13 +5,36 @@ import { Avatar } from '../../Shared/Avatar'
 import ViewModal from './Components/View'
 import { useRef, useState } from 'react'
 import { AirlineModel } from '../../Services/Airlines/airlinesModel'
-
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
-  const [passengers] = usePassenger()
+  const [passengers, getAllAirlines, deletePassengerById] = usePassenger()
   const [modal, setModal] = useState(false)
   const currentPassenger = useRef<AirlineModel[]>([])
   const closeModal = () => {
     setModal(false)
+  }
+  const deletePassenger = async (id: string) => {
+    try {
+      const { isConfirmed } = await MySwal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      })
+      if (isConfirmed) {
+        await deletePassengerById(id)
+        await getAllAirlines()
+        toast.success(`Passenger ${id} deleted successfully`)
+      }
+    } catch (error) {
+      toast.error(`Ups something went wrong...`)
+    }
   }
   return (
     <>
@@ -25,6 +48,9 @@ const Aeirlines = () => {
               onClick={(passenger) => {
                 currentPassenger.current = passenger
                 setModal(true)
+              }}
+              onDelete={(passenger) => {
+                deletePassenger(passenger._id)
               }}
             />
           )
