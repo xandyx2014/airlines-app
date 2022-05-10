@@ -1,5 +1,6 @@
 import { AirlineModel } from '../../Services/Airlines/airlinesModel'
 import { Passenger } from '../../Services/Passenger/passengerModel'
+import { Button } from '../Button'
 import style from './avatar.module.css'
 interface AvatarProps {
   passenger: Passenger
@@ -29,30 +30,27 @@ export const Avatar = ({
         </div>
 
         <span className={style.button}>
-          <button
-            className={style['show-more-btn']}
+          <Button
             onClick={() => {
               onClick(passenger.airline)
             }}
           >
             Show More
-          </button>
-          <button
-            className={style['show-more-btn']}
+          </Button>
+          <Button
             onClick={() => {
               onUpdate(passenger)
             }}
           >
             Edit 📚
-          </button>
-          <button
-            className={style['show-more-btn']}
+          </Button>
+          <Button
             onClick={() => {
               onDelete(passenger)
             }}
           >
             Delete 📥
-          </button>
+          </Button>
         </span>
       </span>
     </div>

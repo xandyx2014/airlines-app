@@ -3,21 +3,25 @@ import style from './passenger.module.css'
 import usePassenger from './hook/usePassenger'
 import { Avatar } from '../../Shared/Avatar'
 import ViewModal from './Components/View'
+import EditModal from './Components/Edit'
 import { useRef, useState } from 'react'
 import { AirlineModel } from '../../Services/Airlines/airlinesModel'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Passenger } from '../../Services/Passenger/passengerModel'
+
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
   const [passengers, getAllAirlines, deletePassengerById] = usePassenger()
   const [modalView, setModalView] = useState(false)
+  const [modalEdit, setModalEdit] = useState(false)
 
   const currentAirlines = useRef<AirlineModel[]>([])
   const currentPassenger = useRef<Passenger>()
   const closeModal = () => {
     setModalView(false)
+    setModalEdit(false)
   }
   const deletePassenger = async (id: string) => {
     try {
@@ -42,7 +46,7 @@ const Aeirlines = () => {
   return (
     <>
       <Navbar />
-      {JSON.stringify(currentPassenger.current)}
+
       <div className={style.cards}>
         {passengers.map((passenger) => {
           return (
@@ -58,6 +62,7 @@ const Aeirlines = () => {
               }}
               onUpdate={(passenger) => {
                 currentPassenger.current = passenger
+                setModalEdit(true)
               }}
             />
           )
@@ -67,6 +72,7 @@ const Aeirlines = () => {
           airlines={currentAirlines.current}
           closeModal={closeModal}
         />
+        <EditModal modalIsOpen={modalEdit} closeModal={closeModal} />
       </div>
     </>
   )
