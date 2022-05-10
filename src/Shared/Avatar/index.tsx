@@ -7,12 +7,14 @@ interface AvatarProps {
   onClick: (airline: AirlineModel[]) => void
   onDelete: (passenger: Passenger) => void
   onUpdate: (passenger: Passenger) => void
+  disabled?: boolean
 }
 export const Avatar = ({
   passenger,
   onClick,
   onDelete,
   onUpdate,
+  disabled = false,
 }: AvatarProps) => {
   return (
     <div className={style['user-card']}>
@@ -34,6 +36,7 @@ export const Avatar = ({
             onClick={() => {
               onClick(passenger.airline)
             }}
+            disabled={disabled}
           >
             Show More
           </Button>
@@ -41,6 +44,7 @@ export const Avatar = ({
             onClick={() => {
               onUpdate(passenger)
             }}
+            disabled={disabled}
           >
             Edit 📚
           </Button>
@@ -48,6 +52,7 @@ export const Avatar = ({
             onClick={() => {
               onDelete(passenger)
             }}
+            disabled={disabled}
           >
             Delete 📥
           </Button>

@@ -14,6 +14,7 @@ import { Button } from '../../Shared/Button'
 import { Loading } from '../../Shared/Loading/Loading'
 import Pagination from 'rc-pagination'
 import LinearProgressIndicator from '../../Shared/LinearProgressIndicator'
+import { Select } from '../../Shared/Select'
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
   const [passengers, getAllAirlines, deletePassengerById, isLoading] =
@@ -72,15 +73,22 @@ const Aeirlines = () => {
             >
               Create Passenger 📚
             </Button>
+            <Select
+              value={pagination.size}
+              onChange={async (value) => {
+                setPagination((state) => ({ ...state, size: Number(value) }))
+                await getAllAirlines({
+                  page: pagination.page,
+                  size: Number(value),
+                })
+              }}
+            ></Select>
           </div>
           <Pagination
             className="ant-pagination"
             defaultCurrent={pagination.page}
             onChange={async (page) => {
-              setPagination({
-                page,
-                size: 10,
-              })
+              setPagination((state) => ({ ...state, page }))
               await getAllAirlines(pagination)
             }}
             total={passengers?.totalPages ?? 0}
@@ -106,6 +114,7 @@ const Aeirlines = () => {
                 setState(Status.update)
                 setModalEdit(true)
               }}
+              disabled={isDelete}
             />
           )
         })}
