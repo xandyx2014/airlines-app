@@ -13,6 +13,7 @@ import { Passenger } from '../../Services/Passenger/passengerModel'
 import { Button } from '../../Shared/Button'
 import { Loading } from '../../Shared/Loading/Loading'
 import Pagination from 'rc-pagination'
+import LinearProgressIndicator from '../../Shared/LinearProgressIndicator'
 const MySwal = withReactContent(Swal)
 const Aeirlines = () => {
   const [passengers, getAllAirlines, deletePassengerById, isLoading] =
@@ -24,6 +25,7 @@ const Aeirlines = () => {
     size: 10,
   })
   const [state, setState] = useState<Status>(Status.create)
+  const [isDelete, setIsDelete] = useState(false)
   const currentAirlines = useRef<AirlineModel[]>([])
   const currentPassenger = useRef<Passenger>()
   const closeModal = () => {
@@ -42,18 +44,23 @@ const Aeirlines = () => {
         confirmButtonText: 'Yes, delete it!',
       })
       if (isConfirmed) {
+        setIsDelete(true)
         await deletePassengerById(id)
         await getAllAirlines(pagination)
         toast.success(`Passenger ${id} deleted successfully`)
+        setIsDelete(false)
       }
     } catch (error) {
       toast.error(`Ups something went wrong...`)
+      setIsDelete(false)
     }
   }
   return (
     <>
       <Navbar />
+      {isDelete && <LinearProgressIndicator />}
       {isLoading && <Loading />}
+
       {isLoading || (
         <>
           <div className={style['button-create']}>
