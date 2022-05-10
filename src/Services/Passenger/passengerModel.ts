@@ -13,5 +13,6 @@ export interface Passenger {
   name: string
   trips: number
   airline: AirlineModel[]
+  airlines: number
   __v: number
 }

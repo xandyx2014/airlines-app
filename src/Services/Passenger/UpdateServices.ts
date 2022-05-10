@@ -4,15 +4,15 @@ import { Passenger } from './passengerModel'
 
 interface DeleteServiceProps {
   id: string
-  passenger: Passenger
+  passenger: Pick<Passenger, 'name' | 'trips' | 'airlines'>
 }
 interface Response {
   message: string
 }
-export const DeleteServices = ({ id, passenger }: DeleteServiceProps) => {
+export const UpdateServices = ({ id, passenger }: DeleteServiceProps) => {
   return axiosHttp.put<Response>(`/v1/${passengerResource}/${id}`, {
     name: passenger.name,
     trips: passenger.trips,
-    airline: passenger.airline,
+    airline: passenger.airlines,
   })
 }

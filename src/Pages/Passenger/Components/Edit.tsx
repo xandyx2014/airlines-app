@@ -1,6 +1,8 @@
 import Modal from 'react-modal'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Button } from '../../../Shared/Button'
+import { UpdateServices } from '../../../Services/Passenger/UpdateServices'
+import { toast } from 'react-toastify'
 
 interface FormInput {
   name: string
@@ -18,17 +20,37 @@ const customStyles = {
   },
 }
 interface EditModalProps {
+  id?: string
   modalIsOpen: boolean
-  closeModal?: () => void
+  closeModal: () => void
 }
 
-export default function EditModal({ modalIsOpen, closeModal }: EditModalProps) {
+export default function EditModal({
+  id,
+  modalIsOpen,
+  closeModal,
+}: EditModalProps) {
   const afterOpenModal = () => {
     // references are now sync'd and can be accessed.
     console.log('after')
   }
   const { register, handleSubmit } = useForm<FormInput>()
-  const onSubmit: SubmitHandler<FormInput> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    try {
+      await UpdateServices({
+        id: id ?? '',
+        passenger: {
+          name: data.name,
+          airlines: data.airline,
+          trips: data.trips,
+        },
+      })
+      toast.success(`Update successfully`)
+      closeModal()
+    } catch (error) {
+      toast.error(`Update passenger failed...`)
+    }
+  }
 
   return (
     <div>

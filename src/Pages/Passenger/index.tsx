@@ -72,7 +72,11 @@ const Aeirlines = () => {
           airlines={currentAirlines.current}
           closeModal={closeModal}
         />
-        <EditModal modalIsOpen={modalEdit} closeModal={closeModal} />
+        <EditModal
+          id={currentPassenger.current?._id}
+          modalIsOpen={modalEdit}
+          closeModal={closeModal}
+        />
       </div>
     </>
   )
