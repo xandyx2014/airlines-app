@@ -14,7 +14,7 @@ const Card = ({ name, country, foundation, img, website }: CardProps) => (
           <h3>{name}</h3>
         </div>
         <div className={style['card-header']}>
-          <a href={website} target="_self">
+          <a href={`//${website}`} target="_blank">
             {website}
           </a>
         </div>
