@@ -21,13 +21,17 @@
   transition: color 0.3s;
   color: royalblue;
 }
+ .card:hover .card-header h3 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
 .card .card-hero img {
   width: 100%;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 .card .card-header {
-  padding: 8px 16px;
+  padding: 0.25rem 16px;
 }
 .card .card-body {
   padding: 8px 16px;
@@ -44,9 +48,7 @@
   align-items: start;
 }
 .card .card-footer .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  max-width: 3rem;
 }
 
 .muted {

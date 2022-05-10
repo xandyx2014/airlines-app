@@ -10,7 +10,16 @@ const Aeirlines = () => {
       <Navbar />
       <div className={style.cards}>
         {airlines.map((airline) => {
-          return <Card key={airline.id} />
+          return (
+            <Card
+              key={airline.id}
+              country={airline.country}
+              img={airline.logo}
+              foundation={airline.established}
+              name={airline.name}
+              website={airline.website}
+            />
+          )
         })}
       </div>
     </>
