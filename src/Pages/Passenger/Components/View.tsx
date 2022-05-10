@@ -43,7 +43,12 @@ export default function ViewModal({
             <li>Country: {airline.country}</li>
             <li>Established: {airline.established}</li>
             <li>Slogan: {airline.slogan}</li>
-            <li>Website: {airline.website}</li>
+            <li>
+              Website:
+              <a href={`//${airline.website}`} target="_blank">
+                {airline.website}
+              </a>
+            </li>
           </ul>
         ))}
       </Modal>
