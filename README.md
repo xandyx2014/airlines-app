@@ -44,3 +44,30 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Structure Project 
+
+```bash
+src
+├───Pages
+│   ├───Aeirlines
+│   │   └───hook
+│   └───Passenger
+│       ├───Components
+│       │   ├───Edit
+│       │   └───View
+│       └───hook
+├───Services
+│   ├───Airlines
+│   └───Passenger
+└───Shared
+    ├───Avatar
+    ├───Button
+    ├───Card
+    ├───Loading
+    └───Navbar
+```
+
+- `Pages` folder contains all the pages of the application.
+- `Services` folder contains all the services of the application.
+- `Shared` folder contains all the shared components of the application.
