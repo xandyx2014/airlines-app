@@ -75,3 +75,4 @@ src
 ## TODO
 - [] Refactor Page/Passenger 
 - [] Add Responsive design to in Cards and Avatar
+- [] Optimize images 
